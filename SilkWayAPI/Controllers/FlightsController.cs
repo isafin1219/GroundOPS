@@ -92,7 +92,7 @@ namespace SilkwayAPI.Controllers
             var QFlightsList = new List<Flight>();
             Request.Uid.ForEach((int uid) => {
                 var flight = _context.FlightList.SingleOrDefault(m => m.Uid == uid);
-                Console.WriteLine(flight.Uid);
+                Console.WriteLine(uid);
                 QFlightsList.Add(flight);
             });
 
