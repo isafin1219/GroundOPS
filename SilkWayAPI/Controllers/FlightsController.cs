@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 namespace SilkwayAPI.Controllers
 {
     [Produces("application/json")]
-    [Route("api/Flights")]
+    [Route("api/flights")]
     [Authorize]
     public class FlightsController : Controller
     {
