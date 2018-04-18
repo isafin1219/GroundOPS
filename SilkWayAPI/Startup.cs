@@ -1,5 +1,6 @@
 ﻿using Hangfire;
 using Hangfire.PostgreSql;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -23,6 +24,18 @@ namespace SilkwayAPI
         {
             services.AddMvc();
 
+            // 1. Add Authentication Services
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+
+            }).AddJwtBearer(options =>
+            {
+                options.Authority = "https://silkway.eu.auth0.com/";
+                options.Audience = "http://47.91.107.153";
+            });
+
             services.AddEntityFrameworkNpgsql().AddDbContext<SilkwayAPIContext>(options =>
                     options.UseNpgsql(Configuration.GetConnectionString("SilkwayAPIPostgreSQL")));
 
@@ -39,6 +52,10 @@ namespace SilkwayAPI
 
             app.UseHangfireServer();
             app.UseHangfireDashboard();
+
+            // 2. Enable authentication middleware
+            app.UseAuthentication();
+
             app.UseMvc();
         }
     }
