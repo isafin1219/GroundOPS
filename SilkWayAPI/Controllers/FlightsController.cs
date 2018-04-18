@@ -53,7 +53,7 @@ namespace SilkwayAPI.Controllers
             {
                 return from flight in _context.FlightList
                        where (flight.Apt_dep.Iata == request.DepartureIata || flight.Apt_arr_actual.Iata == request.DepartureIata) && 
-                       (flight.Est_blocktime > DateTime.UtcNow.AddMinutes(-request.Back) && flight.Est_blocktime < DateTime.UtcNow.AddMinutes(request.Fwd))
+                       (flight.Est_blocktime > DateTime.UtcNow.AddDays(-request.Back) && flight.Est_blocktime < DateTime.UtcNow.AddDays(request.Fwd))
                        orderby flight.Est_blocktime
                        select flight;
             }
