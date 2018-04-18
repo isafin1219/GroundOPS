@@ -31,7 +31,7 @@ namespace SilkwayAPI.Controllers
             if ((request.Back > 0 || request.Fwd > 0) && request.Date == null)
             {
                 return from flight in _context.FlightList
-                       where flight.Est_blocktime > DateTime.UtcNow.AddMinutes(-request.Back) && flight.Est_blocktime < DateTime.UtcNow.AddMinutes(request.Fwd)
+                       where flight.Est_blocktime.Value > DateTime.UtcNow.AddHours(-request.Back) && flight.Est_blocktime < DateTime.UtcNow.AddHours(request.Fwd)
                        select flight;
             }
             else if (request.Date != null && (request.Back == 0 && request.Fwd == 0)) {
@@ -90,8 +90,8 @@ namespace SilkwayAPI.Controllers
         public IEnumerable<Flight> QFlights([FromBody] RFlight Request)
         {
             var QFlightsList = new List<Flight>();
-            Request.Uid.ForEach(async (int uid) => {
-                var flight = await _context.FlightList.SingleOrDefaultAsync(m => m.Uid == uid);
+            Request.Uid.ForEach((int uid) => {
+                var flight = _context.FlightList.SingleOrDefault(m => m.Uid == uid);
                 Console.WriteLine(uid);
                 QFlightsList.Add(flight);
             });
@@ -125,6 +125,13 @@ namespace SilkwayAPI.Controllers
                 }
             }
             return "Cron Jobs removed";
+        }
+
+        [HttpGet("/updatedb")]
+        public string UpdateDb()
+        {
+            RecurrentJob();
+            return "DB updated";
         }
 
         public void RecurrentJob()
