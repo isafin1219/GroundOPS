@@ -85,14 +85,14 @@ namespace SilkwayAPI.Controllers
             return Ok(flight);
         }
 
-        // GET: api/Flights/Uids
+        // Post: api/Flights/Uids
         [HttpPost("Uids")]
         public IEnumerable<Flight> QFlights([FromBody] RFlight Request)
         {
             var QFlightsList = new List<Flight>();
             Request.Uid.ForEach((int uid) => {
                 var flight = _context.FlightList.SingleOrDefault(m => m.Uid == uid);
-                Console.WriteLine(uid);
+                Console.WriteLine(flight.Uid);
                 QFlightsList.Add(flight);
             });
 
