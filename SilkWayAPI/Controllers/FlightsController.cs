@@ -1,5 +1,6 @@
 ﻿using Hangfire;
 using Hangfire.Storage;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Extensions.Internal;
@@ -26,6 +27,7 @@ namespace SilkwayAPI.Controllers
 
         // GET: api/Flights
         [HttpGet]
+        [Authorize]
         public IEnumerable<Flight> GetFlight([FromHeader] RFlight request)
         {
             if ((request.Back > 0 || request.Fwd > 0) && request.Date == null)
@@ -47,6 +49,7 @@ namespace SilkwayAPI.Controllers
 
         // GET: api/Flights
         [HttpGet("station")]
+        [Authorize]
         public IEnumerable<Flight> GetFlightbyStation([FromHeader] RFlight request)
         {
             if ((request.Back > 0 || request.Fwd > 0) && request.DepartureIata != null)
@@ -68,6 +71,7 @@ namespace SilkwayAPI.Controllers
 
         // GET: api/Flights/5
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<IActionResult> GetFlight([FromRoute] int id)
         {
             if (!ModelState.IsValid)
@@ -87,6 +91,7 @@ namespace SilkwayAPI.Controllers
 
         // Post: api/Flights/Uids
         [HttpPost("Uids")]
+        [Authorize]
         public IEnumerable<Flight> QFlights([FromBody] RFlight Request)
         {
             var QFlightsList = new List<Flight>();
@@ -102,7 +107,7 @@ namespace SilkwayAPI.Controllers
             return QFlightsList;
         }
 
-        [HttpGet("/testdate")]
+        [HttpGet("/testdate")]        
         public string Testdate()
         {
             //RecurringJob.AddOrUpdate("BlueoneData", () => RecurrentJob(), "*/1 * * * *");
@@ -110,6 +115,7 @@ namespace SilkwayAPI.Controllers
         }
 
         [HttpGet("/addcronjob")]
+        [Authorize]
         public string AddCronJob()
         {
             //RecurringJob.AddOrUpdate("BlueoneData", () => RecurrentJob(), "*/1 * * * *");
@@ -118,6 +124,7 @@ namespace SilkwayAPI.Controllers
         }
 
         [HttpGet("/removecronjobs")]
+        [Authorize]
         public string RemoveCronJobs()
         {
             using (var connection = JobStorage.Current.GetConnection())
@@ -131,6 +138,7 @@ namespace SilkwayAPI.Controllers
         }
 
         [HttpGet("/updatedb")]
+        [Authorize]
         public string UpdateDb()
         {
             RecurrentJob();
@@ -143,6 +151,7 @@ namespace SilkwayAPI.Controllers
         }
         
         [HttpPost("/testpost")]
+        [Authorize]
         public string TestPost([FromBody] RFlight Request)
         {
             string test = "";
