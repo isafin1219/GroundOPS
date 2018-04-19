@@ -1,6 +1,7 @@
 ﻿using Hangfire;
 using Hangfire.PostgreSql;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -37,10 +38,24 @@ namespace SilkwayAPI
                 options.Audience = Configuration["Auth0:ApiIdentifier"];
             });
 
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("read:profile", policy => policy.Requirements.Add(new HasScopeRequirement("read:profile", domain)));
+                options.AddPolicy("update:profile", policy => policy.Requirements.Add(new HasScopeRequirement("update:profile", domain)));
+                options.AddPolicy("read:reports", policy => policy.Requirements.Add(new HasScopeRequirement("read:reports", domain)));
+                options.AddPolicy("add:report", policy => policy.Requirements.Add(new HasScopeRequirement("add:report", domain)));
+                options.AddPolicy("update:report", policy => policy.Requirements.Add(new HasScopeRequirement("update:report", domain)));
+                options.AddPolicy("delete:report", policy => policy.Requirements.Add(new HasScopeRequirement("delete:report", domain)));
+                options.AddPolicy("read:flights", policy => policy.Requirements.Add(new HasScopeRequirement("read:flights", domain)));
+            });
+
             services.AddEntityFrameworkNpgsql().AddDbContext<SilkwayAPIContext>(options =>
                     options.UseNpgsql(Configuration.GetConnectionString("SilkwayAPIPostgreSQL")));
 
             services.AddHangfire(x => x.UsePostgreSqlStorage(Configuration.GetConnectionString("SilkwayAPIPostgreSQL")));
+
+            // register the scope authorization handler
+            services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

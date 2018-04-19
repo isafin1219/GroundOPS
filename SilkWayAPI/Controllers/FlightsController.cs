@@ -15,8 +15,7 @@ using System.Threading.Tasks;
 namespace SilkwayAPI.Controllers
 {
     [Produces("application/json")]
-    [Route("api/flights")]
-    [Authorize]
+    [Route("api/flights")]    
     public class FlightsController : Controller
     {
         private readonly SilkwayAPIContext _context;
@@ -28,7 +27,7 @@ namespace SilkwayAPI.Controllers
 
         // GET: api/Flights
         [HttpGet]
-        [Authorize]
+        [Authorize("read:flights")]
         public IEnumerable<Flight> GetFlight([FromHeader] RFlight request)
         {
             if ((request.Back > 0 || request.Fwd > 0) && request.Date == null)
@@ -50,7 +49,7 @@ namespace SilkwayAPI.Controllers
 
         // GET: api/Flights
         [HttpGet("station")]
-        [Authorize]
+        [Authorize("read:flights")]
         public IEnumerable<Flight> GetFlightbyStation([FromHeader] RFlight request)
         {
             if ((request.Back > 0 || request.Fwd > 0) && request.DepartureIata != null)
@@ -72,7 +71,7 @@ namespace SilkwayAPI.Controllers
 
         // GET: api/Flights/5
         [HttpGet("{id}")]
-        [Authorize]
+        [Authorize("read:flights")]
         public async Task<IActionResult> GetFlight([FromRoute] int id)
         {
             if (!ModelState.IsValid)
@@ -92,7 +91,7 @@ namespace SilkwayAPI.Controllers
 
         // Post: api/Flights/Uids
         [HttpPost("Uids")]
-        [Authorize]
+        [Authorize("read:flights")]
         public IEnumerable<Flight> QFlights([FromBody] RFlight Request)
         {
             var QFlightsList = new List<Flight>();
@@ -115,8 +114,7 @@ namespace SilkwayAPI.Controllers
             return DateTime.UtcNow.AddDays(-1).ToString("s", System.Globalization.CultureInfo.InvariantCulture);
         }
 
-        [HttpGet("/addcronjob")]
-        [Authorize]
+        [HttpGet("/addcronjob")]        
         public string AddCronJob()
         {
             //RecurringJob.AddOrUpdate("BlueoneData", () => RecurrentJob(), "*/1 * * * *");
@@ -124,8 +122,7 @@ namespace SilkwayAPI.Controllers
             return "Cron Job added";
         }
 
-        [HttpGet("/removecronjobs")]
-        [Authorize]
+        [HttpGet("/removecronjobs")]        
         public string RemoveCronJobs()
         {
             using (var connection = JobStorage.Current.GetConnection())
@@ -138,8 +135,7 @@ namespace SilkwayAPI.Controllers
             return "Cron Jobs removed";
         }
 
-        [HttpGet("/updatedb")]
-        [Authorize]
+        [HttpGet("/updatedb")]        
         public string UpdateDb()
         {
             RecurrentJob();
@@ -151,8 +147,7 @@ namespace SilkwayAPI.Controllers
             Console.WriteLine(JsonConvert.SerializeObject(new WebServiceData(_context).ReadWebservice()));
         }
         
-        [HttpPost("/testpost")]
-        [Authorize]
+        [HttpPost("/testpost")]        
         public string TestPost([FromBody] RFlight Request)
         {
             string test = "";
