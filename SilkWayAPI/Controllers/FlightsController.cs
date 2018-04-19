@@ -15,7 +15,8 @@ using System.Threading.Tasks;
 namespace SilkwayAPI.Controllers
 {
     [Produces("application/json")]
-    [Route("api/flights")]    
+    [Route("api/flights")]
+    [Authorize]
     public class FlightsController : Controller
     {
         private readonly SilkwayAPIContext _context;
@@ -26,8 +27,7 @@ namespace SilkwayAPI.Controllers
         }
 
         // GET: api/Flights
-        [HttpGet]
-        [Authorize("read:flights")]
+        [HttpGet]        
         public IEnumerable<Flight> GetFlight([FromHeader] RFlight request)
         {
             if ((request.Back > 0 || request.Fwd > 0) && request.Date == null)
@@ -48,8 +48,7 @@ namespace SilkwayAPI.Controllers
         }
 
         // GET: api/Flights
-        [HttpGet("station")]
-        [Authorize("read:flights")]
+        [HttpGet("station")]        
         public IEnumerable<Flight> GetFlightbyStation([FromHeader] RFlight request)
         {
             if ((request.Back > 0 || request.Fwd > 0) && request.DepartureIata != null)
@@ -70,8 +69,7 @@ namespace SilkwayAPI.Controllers
         }
 
         // GET: api/Flights/5
-        [HttpGet("{id}")]
-        [Authorize("read:flights")]
+        [HttpGet("{id}")]        
         public async Task<IActionResult> GetFlight([FromRoute] int id)
         {
             if (!ModelState.IsValid)
@@ -90,8 +88,7 @@ namespace SilkwayAPI.Controllers
         }
 
         // Post: api/Flights/Uids
-        [HttpPost("Uids")]
-        [Authorize("read:flights")]
+        [HttpPost("Uids")]        
         public IEnumerable<Flight> QFlights([FromBody] RFlight Request)
         {
             var QFlightsList = new List<Flight>();
