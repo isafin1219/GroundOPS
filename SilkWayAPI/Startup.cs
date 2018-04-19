@@ -25,6 +25,7 @@ namespace SilkwayAPI
             services.AddMvc();
 
             // 1. Add Authentication Services
+            string domain = $"https://{Configuration["Auth0:Domain"]}/";
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -32,8 +33,8 @@ namespace SilkwayAPI
 
             }).AddJwtBearer(options =>
             {
-                options.Authority = "https://silkway.eu.auth0.com/";
-                options.Audience = "http://47.91.107.153";
+                options.Authority = domain;
+                options.Audience = Configuration["Auth0:ApiIdentifier"];
             });
 
             services.AddEntityFrameworkNpgsql().AddDbContext<SilkwayAPIContext>(options =>
