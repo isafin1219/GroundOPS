@@ -13750,11 +13750,11 @@
       "hideWarningsAndErrors": true
     },
     "restore": {
-      "projectUniqueName": "C:\\Users\\isafin\\source\\repos\\SilkwayAPI\\SilkWayAPI\\SilkwayAPI\\SilkwayAPI.csproj",
+      "projectUniqueName": "C:\\Users\\isafin\\source\\repos\\GroundOPS\\SilkwayAPI\\SilkwayAPI.csproj",
       "projectName": "SilkwayAPI",
-      "projectPath": "C:\\Users\\isafin\\source\\repos\\SilkwayAPI\\SilkWayAPI\\SilkwayAPI\\SilkwayAPI.csproj",
+      "projectPath": "C:\\Users\\isafin\\source\\repos\\GroundOPS\\SilkwayAPI\\SilkwayAPI.csproj",
       "packagesPath": "C:\\Users\\isafin\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\isafin\\source\\repos\\SilkwayAPI\\SilkWayAPI\\SilkwayAPI\\obj\\",
+      "outputPath": "C:\\Users\\isafin\\source\\repos\\GroundOPS\\SilkwayAPI\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
