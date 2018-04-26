@@ -38,6 +38,16 @@ namespace SilkwayAPI
                 options.Audience = Configuration["Auth0:ApiIdentifier"];
             });
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder.AllowAnyOrigin()
+                      .AllowAnyMethod()
+                      .AllowAnyHeader()
+                      .AllowCredentials()
+                .Build());
+            });
+
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("read:profile", policy => policy.Requirements.Add(new HasScopeRequirement("read:profile", domain)));
@@ -71,6 +81,8 @@ namespace SilkwayAPI
 
             // 2. Enable authentication middleware
             app.UseAuthentication();
+
+            app.UseCors("CorsPolicy");
 
             app.UseMvc();
         }
