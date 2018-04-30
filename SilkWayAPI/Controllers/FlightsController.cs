@@ -47,6 +47,33 @@ namespace SilkwayAPI.Controllers
             }            
         }
 
+        // GET: api/Flights/Group
+        [HttpGet("Group")]
+        public IEnumerable<FlightGroup> FlightsGroup ([FromHeader] RFlight request)
+        {
+            if ((request.Back > 0 || request.Fwd > 0) && request.Date == null)
+            {
+                return from flight in _context.FlightList
+                       where flight.Est_blocktime.Value > DateTime.UtcNow.AddHours(-request.Back) && flight.Est_blocktime < DateTime.UtcNow.AddHours(request.Fwd)
+                       group flight by flight.Aircraft_reg into FGroup
+                       select new FlightGroup { GroupID  = FGroup.Key, Flights = FGroup.ToList() };
+            }
+            else if (request.Date != null && (request.Back == 0 && request.Fwd == 0))
+            {
+                return from flight in _context.FlightList
+                       where flight.Est_blocktime > request.Date && flight.Est_blocktime < request.Date.Value.AddDays(1)
+                       group flight by flight.Aircraft_reg into FGroup
+                       select new FlightGroup { GroupID = FGroup.Key, Flights = FGroup.ToList() };
+            }
+            else
+            {  
+                return from flight in _context.FlightList
+                       where flight.Est_blocktime > DateTime.UtcNow.AddDays(-2)
+                       group flight by flight.Aircraft_reg into FGroup
+                       select new FlightGroup { GroupID = FGroup.Key, Flights = FGroup.ToList() };
+            }
+        }
+
         // GET: api/Flights
         [HttpGet("station")]        
         public IEnumerable<Flight> GetFlightbyStation([FromHeader] RFlight request)
