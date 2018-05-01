@@ -34,16 +34,18 @@ namespace SilkwayAPI.Controllers
             {
                 return from flight in _context.FlightList
                        where flight.Est_blocktime.Value > DateTime.UtcNow.AddHours(-request.Back) && flight.Est_blocktime < DateTime.UtcNow.AddHours(request.Fwd)
+                       orderby flight.Est_blocktime.Value ascending
                        select flight;
             }
             else if (request.Date != null && (request.Back == 0 && request.Fwd == 0)) {
                 return from flight in _context.FlightList
                        where flight.Est_blocktime > request.Date && flight.Est_blocktime < request.Date.Value.AddDays(1)
+                       orderby flight.Est_blocktime.Value ascending
                        select flight;
             }
             else
             {
-                return _context.FlightList.Where(f => f.Est_blocktime > DateTime.UtcNow.AddDays(-2));
+                return _context.FlightList.Where(f => f.Est_blocktime > DateTime.UtcNow.AddDays(-2)).OrderBy(f => f.Est_blocktime);
             }            
         }
 
@@ -56,21 +58,24 @@ namespace SilkwayAPI.Controllers
                 return from flight in _context.FlightList
                        where flight.Est_blocktime.Value > DateTime.UtcNow.AddHours(-request.Back) && flight.Est_blocktime < DateTime.UtcNow.AddHours(request.Fwd)
                        group flight by flight.Aircraft_reg into FGroup
-                       select new FlightGroup { GroupID  = FGroup.Key, Flights = FGroup.ToList() };
+                       orderby FGroup.Key ascending
+                       select new FlightGroup { GroupID  = FGroup.Key, Flights = FGroup.OrderBy(f => f.Est_blocktime).ToList() };
             }
             else if (request.Date != null && (request.Back == 0 && request.Fwd == 0))
             {
                 return from flight in _context.FlightList
                        where flight.Est_blocktime > request.Date && flight.Est_blocktime < request.Date.Value.AddDays(1)
                        group flight by flight.Aircraft_reg into FGroup
-                       select new FlightGroup { GroupID = FGroup.Key, Flights = FGroup.ToList() };
+                       orderby FGroup.Key ascending
+                       select new FlightGroup { GroupID = FGroup.Key, Flights = FGroup.OrderBy(f => f.Est_blocktime).ToList() };
             }
             else
             {  
                 return from flight in _context.FlightList
                        where flight.Est_blocktime > DateTime.UtcNow.AddDays(-2)
                        group flight by flight.Aircraft_reg into FGroup
-                       select new FlightGroup { GroupID = FGroup.Key, Flights = FGroup.ToList() };
+                       orderby FGroup.Key ascending
+                       select new FlightGroup { GroupID = FGroup.Key, Flights = FGroup.OrderBy(f => f.Est_blocktime).ToList() };
             }
         }
 
