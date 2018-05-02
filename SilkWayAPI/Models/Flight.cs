@@ -87,5 +87,20 @@ namespace SilkwayAPI.Models
         }
 
         public DateTime? Modified_at { get; set; }
+
+        [NotMapped]
+        public int Progress
+        {
+            get {
+                if (DateTime.Now > Est_blocktime)
+                {
+                    TimeSpan CurrentDifference = DateTime.Now.Subtract(Est_blocktime.Value);
+                    TimeSpan Flighttime = Est_blockintime.Value.Subtract(Est_blocktime.Value);
+                    return CurrentDifference.Minutes / Flighttime.Minutes;
+                }
+                else return 0;                                
+            }
+            set { ; }
+        }
     }    
 }
