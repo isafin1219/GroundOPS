@@ -96,8 +96,8 @@ namespace SilkwayAPI.Models
                 {
                     TimeSpan CurrentDifference = DateTime.Now.Subtract(Est_blocktime.Value);
                     TimeSpan Flighttime = Est_blockintime.Value.Subtract(Est_blocktime.Value);
-                    Console.WriteLine(CurrentDifference.Minutes);
-                    Console.WriteLine(Flighttime.Minutes);
+                    Console.WriteLine(Uid + " " + CurrentDifference.Minutes);
+                    Console.WriteLine(Uid + " " + Flighttime.Minutes);
                     return 0;
                 }
                 else return 0;                                
