@@ -86,23 +86,6 @@ namespace SilkwayAPI.Models
             set { _Delays = JsonConvert.SerializeObject(value); }
         }
 
-        public DateTime? Modified_at { get; set; }
-
-        [NotMapped]
-        public int Progress
-        {
-            get {
-                if (DateTime.Now > Est_blocktime)
-                {
-                    TimeSpan CurrentDifference = DateTime.Now.Subtract(Est_blocktime.Value);
-                    TimeSpan Flighttime = Est_blockintime.Value.Subtract(Est_blocktime.Value);
-                    Console.WriteLine(Uid + " " + CurrentDifference.Minutes);
-                    Console.WriteLine(Uid + " " + Flighttime.Minutes);
-                    return 0;
-                }
-                else return 0;                                
-            }
-            set { ; }
-        }
+        public DateTime? Modified_at { get; set; }        
     }    
 }
