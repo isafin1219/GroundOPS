@@ -16,7 +16,7 @@ namespace SilkwayAPI.Controllers
 {
     [Produces("application/json")]
     [Route("api/flights")]
-    [Authorize("read:flights")]
+    [Authorize]
     public class FlightsController : Controller
     {
         private readonly SilkwayAPIContext _context;

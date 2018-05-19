@@ -24,9 +24,9 @@ namespace SilkwayAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-
+            #region Auth0
             // 1. Add Authentication Services
-            string domain = $"https://{Configuration["Auth0:Domain"]}/";
+            /*string domain = $"https://{Configuration["Auth0:Domain"]}/";
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -36,7 +36,7 @@ namespace SilkwayAPI
             {
                 options.Authority = domain;
                 options.Audience = Configuration["Auth0:ApiIdentifier"];
-            });
+            });*/
 
             services.AddCors(options =>
             {
@@ -48,7 +48,7 @@ namespace SilkwayAPI
                 .Build());
             });
 
-            services.AddAuthorization(options =>
+            /*services.AddAuthorization(options =>
             {
                 options.AddPolicy("read:profile", policy => policy.Requirements.Add(new HasScopeRequirement("read:profile", domain)));
                 options.AddPolicy("update:profile", policy => policy.Requirements.Add(new HasScopeRequirement("update:profile", domain)));
@@ -57,7 +57,22 @@ namespace SilkwayAPI
                 options.AddPolicy("update:report", policy => policy.Requirements.Add(new HasScopeRequirement("update:report", domain)));
                 options.AddPolicy("delete:report", policy => policy.Requirements.Add(new HasScopeRequirement("delete:report", domain)));
                 options.AddPolicy("read:flights", policy => policy.Requirements.Add(new HasScopeRequirement("read:flights", domain)));
-            });
+            });*/
+            #endregion
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.Authority = "https://securetoken.google.com/registration-9a18d";
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidIssuer = "https://securetoken.google.com/registration-9a18d",
+                        ValidateAudience = true,
+                        ValidAudience = "registration-9a18d",
+                        ValidateLifetime = true
+                    };
+                });
 
             services.AddEntityFrameworkNpgsql().AddDbContext<SilkwayAPIContext>(options =>
                     options.UseNpgsql(Configuration.GetConnectionString("SilkwayAPIPostgreSQL")));
@@ -65,7 +80,7 @@ namespace SilkwayAPI
             services.AddHangfire(x => x.UsePostgreSqlStorage(Configuration.GetConnectionString("SilkwayAPIPostgreSQL")));
 
             // register the scope authorization handler
-            services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
+            //services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
