@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using SilkwayAPI.Data;
 
 namespace SilkwayAPI
@@ -38,6 +39,20 @@ namespace SilkwayAPI
                 options.Audience = Configuration["Auth0:ApiIdentifier"];
             });*/
 
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.Authority = "https://securetoken.google.com/registration-9a18d";
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidIssuer = "https://securetoken.google.com/registration-9a18d",
+                        ValidateAudience = true,
+                        ValidAudience = "registration-9a18d",
+                        ValidateLifetime = true
+                    };
+                });
+
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy",
@@ -59,20 +74,6 @@ namespace SilkwayAPI
                 options.AddPolicy("read:flights", policy => policy.Requirements.Add(new HasScopeRequirement("read:flights", domain)));
             });*/
             #endregion
-
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
-                {
-                    options.Authority = "https://securetoken.google.com/registration-9a18d";
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuer = true,
-                        ValidIssuer = "https://securetoken.google.com/registration-9a18d",
-                        ValidateAudience = true,
-                        ValidAudience = "registration-9a18d",
-                        ValidateLifetime = true
-                    };
-                });
 
             services.AddEntityFrameworkNpgsql().AddDbContext<SilkwayAPIContext>(options =>
                     options.UseNpgsql(Configuration.GetConnectionString("SilkwayAPIPostgreSQL")));
