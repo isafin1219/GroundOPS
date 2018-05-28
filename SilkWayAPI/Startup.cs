@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -94,6 +95,8 @@ namespace SilkwayAPI
 
             app.UseHangfireServer();
             app.UseHangfireDashboard();
+
+            app.UseForwardedHeaders(new ForwardedHeadersOptions             {                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto             });
 
             // 2. Enable authentication middleware
             app.UseAuthentication();

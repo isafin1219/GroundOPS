@@ -1,0 +1,15 @@
+﻿<Properties StartupConfiguration="{C0FF4F8A-0770-449C-BB6F-CE3141D7C8FC}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="SilkWayAPI/Properties/launchSettings.json">
+    <Files>
+      <File FileName="SilkWayAPI/Startup.cs" Line="102" Column="16" />
+      <File FileName="SilkWayAPI/Properties/launchSettings.json" Line="26" Column="39" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.SilkwayAPI PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MultiItemStartupConfigurations />
+</Properties>
