@@ -96,7 +96,10 @@ namespace SilkwayAPI
             app.UseHangfireServer();
             app.UseHangfireDashboard();
 
-            app.UseForwardedHeaders(new ForwardedHeadersOptions             {                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto             });
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
 
             // 2. Enable authentication middleware
             app.UseAuthentication();

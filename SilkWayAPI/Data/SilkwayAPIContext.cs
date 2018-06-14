@@ -15,6 +15,7 @@ namespace SilkwayAPI.Data
         }
 
         public DbSet<Flight> FlightList { get; set; }
+        public DbSet<Report> ReportList { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -25,6 +26,19 @@ namespace SilkwayAPI.Data
                 entity.Property(b => b._Apt_arr_actual).HasColumnName("Apt_arr_actual");
                 entity.Property(b => b._Fuel).HasColumnName("Fuel");
                 entity.Property(b => b._Crew_compo).HasColumnName("Crew_compo");
+                entity.Property(b => b._Delays).HasColumnName("Delays");
+            });
+
+            modelBuilder.Entity<Report>(entity =>
+            {
+                entity.Property(b => b._ZFW).HasColumnName("ZFW");
+                entity.Property(b => b._Loading).HasColumnName("Loading");
+                entity.Property(b => b._Fueling).HasColumnName("Fueling");
+                entity.Property(b => b._Catering).HasColumnName("Catering");
+                entity.Property(b => b._OFP).HasColumnName("OFP");
+                entity.Property(b => b._WnB).HasColumnName("WnB");
+                entity.Property(b => b._Doors).HasColumnName("Doors");
+                entity.Property(b => b._Status).HasColumnName("Status");
                 entity.Property(b => b._Delays).HasColumnName("Delays");
             });
         }
