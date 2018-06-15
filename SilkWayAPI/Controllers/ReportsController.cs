@@ -30,29 +30,67 @@ namespace SilkwayAPI.Controllers
         }
 
         // GET api/reports/5
-        [HttpGet("{id}")]
-        public Report Get(int id)
+        [HttpGet("{id}", Name = "GetReport")]
+        public IActionResult GetById(long id)
         {
-            return _context.ReportList.Find(id);
+            var item = _context.ReportList.Find(id);
+            if (item == null)
+            {
+                return NotFound();
+            }
+            return Ok(item);
         }
 
         // POST api/reports
         [HttpPost]
-        public void Post([FromBody]string value)
+        public IActionResult Create([FromBody] Report item)
         {
-            
+            if (item == null)
+            {
+                return BadRequest();
+            }
+
+            _context.ReportList.Add(item);
+            _context.SaveChanges();
+
+            return CreatedAtRoute("GetReport", new { id = item.Reportid }, item);
         }
 
         // PUT api/reports/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public IActionResult Update(long id, [FromBody] Report item)
         {
+            if (item == null || item.Reportid != id)
+            {
+                return BadRequest();
+            }
+
+            var report = _context.ReportList.Find(id);
+            if (report == null)
+            {
+                return NotFound();
+            }
+
+            report = item;
+
+            _context.ReportList.Update(report);
+            _context.SaveChanges();
+            return NoContent();
         }
 
         // DELETE api/reports/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(long id)
         {
+            var todo = _context.ReportList.Find(id);
+            if (todo == null)
+            {
+                return NotFound();
+            }
+
+            _context.ReportList.Remove(todo);
+            _context.SaveChanges();
+            return NoContent();
         }
     }
 }
