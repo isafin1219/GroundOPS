@@ -43,14 +43,30 @@ namespace SilkwayAPI.Controllers
 
         // POST api/reports
         [HttpPost]
-        public IActionResult Create([FromBody] Report item)
+        public IActionResult Create([FromBody] ReportAPIModel item)
         {
             if (item == null)
             {
                 return BadRequest();
             }
 
-            _context.ReportList.Add(item);
+            var newreport = new Report
+            {
+                Reportid = item.Reportid;
+                Flightid = item.Flightid;
+                Date = item.Date;
+                ZFW = item.ZFW;
+                Loading = item.Loading;
+                Fueling = item.Fueling;
+                Catering = item.Catering;
+                OFP = item.OFP;
+                WnB = item.WnB;
+                Doors = item.Doors;
+                Status = item.Status;
+                Delays = item.Delays;
+            };
+
+            _context.ReportList.Add(newreport);
             _context.SaveChanges();
 
             return CreatedAtRoute("GetReport", new { id = item.Reportid }, item);
