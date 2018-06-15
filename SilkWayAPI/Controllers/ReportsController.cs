@@ -33,7 +33,7 @@ namespace SilkwayAPI.Controllers
         [HttpGet("{id}", Name = "GetReport")]
         public IActionResult GetById(long id)
         {
-            var item = _context.ReportList.Find(id);
+            var item = _context.ReportList.SingleOrDefault(m => m.Reportid == id);
             if (item == null)
             {
                 return NotFound();
@@ -81,7 +81,7 @@ namespace SilkwayAPI.Controllers
                 return BadRequest();
             }
 
-            var report = _context.ReportList.Find(id);
+            var report = _context.ReportList.SingleOrDefault(m => m.Reportid == id);
             if (report == null)
             {
                 return NotFound();
@@ -112,7 +112,7 @@ namespace SilkwayAPI.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(long id)
         {
-            var report = _context.ReportList.Find(id);
+            var report = _context.ReportList.SingleOrDefault(m => m.Reportid == id);
             if (report == null)
             {
                 return NotFound();
