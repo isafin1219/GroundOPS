@@ -134,6 +134,6 @@ namespace SilkwayAPI.Models
     public class DelaysItem
     {
         public string Code { get; set; }
-        public DateTime Duration { get; set; }
+        public string Duration { get; set; }
     }
 }
