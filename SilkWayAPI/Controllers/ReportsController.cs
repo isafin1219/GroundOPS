@@ -12,7 +12,7 @@ namespace SilkwayAPI.Controllers
 {
     [Produces("application/json")]
     [Route("api/reports")]
-    [Authorize]
+    //[Authorize]
     public class ReportsController : Controller
     {
         private readonly SilkwayAPIContext _context;
@@ -27,20 +27,20 @@ namespace SilkwayAPI.Controllers
         public IEnumerable<Report> Get()
         {
             return _context.ReportList.ToArray();
-            //return new string[] { "value1", "value2" };
         }
 
         // GET api/reports/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public Report Get(int id)
         {
-            return "value";
+            return _context.ReportList.Find(id);
         }
 
         // POST api/reports
         [HttpPost]
         public void Post([FromBody]string value)
         {
+            
         }
 
         // PUT api/reports/5
