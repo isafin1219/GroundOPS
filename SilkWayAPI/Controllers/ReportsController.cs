@@ -43,11 +43,11 @@ namespace SilkwayAPI.Controllers
 
         // POST api/reports
         [HttpPost]
-        public string Create([FromBody] ReportAPIModel item)
+        public IActionResult Create([FromBody] ReportAPIModel item)
         {
             if (item == null)
             {
-                return "NULL Object";//BadRequest();
+                return BadRequest();
             }
 
             var newreport = new Report
@@ -66,16 +66,15 @@ namespace SilkwayAPI.Controllers
                 Delays = item.Delays
             };
 
-            //_context.ReportList.Add(newreport);
-            //_context.SaveChanges();
+            _context.ReportList.Add(newreport);
+            _context.SaveChanges();
 
-            //return CreatedAtRoute("GetReport", new { id = newreport.Reportid },  newreport);
-            return newreport.ToString();
+            return CreatedAtRoute("GetReport", new { id = newreport.Reportid },  newreport);
         }
 
         // PUT api/reports/5
         [HttpPut("{id}")]
-        public IActionResult Update(long id, [FromBody] Report item)
+        public IActionResult Update(long id, [FromBody] ReportAPIModel item)
         {
             if (item == null || item.Reportid != id)
             {
@@ -88,7 +87,21 @@ namespace SilkwayAPI.Controllers
                 return NotFound();
             }
 
-            report = item;
+            report = new Report
+            {
+                Reportid = item.Reportid,
+                Flightid = item.Flightid,
+                Date = item.Date,
+                ZFW = item.ZFW,
+                Loading = item.Loading,
+                Fueling = item.Fueling,
+                Catering = item.Catering,
+                OFP = item.OFP,
+                WnB = item.WnB,
+                Doors = item.Doors,
+                Status = item.Status,
+                Delays = item.Delays
+            };
 
             _context.ReportList.Update(report);
             _context.SaveChanges();
