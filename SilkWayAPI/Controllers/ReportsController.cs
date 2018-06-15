@@ -43,11 +43,11 @@ namespace SilkwayAPI.Controllers
 
         // POST api/reports
         [HttpPost]
-        public IActionResult Create([FromBody] ReportAPIModel item)
+        public Report Create([FromBody] ReportAPIModel item)
         {
             if (item == null)
             {
-                return BadRequest();
+                //return BadRequest();
             }
 
             var newreport = new Report
@@ -69,7 +69,8 @@ namespace SilkwayAPI.Controllers
             _context.ReportList.Add(newreport);
             _context.SaveChanges();
 
-            return CreatedAtRoute("GetReport", new { id = item.Reportid }, item);
+            //return CreatedAtRoute("GetReport", new { id = newreport.Reportid },  newreport);
+            return newreport;
         }
 
         // PUT api/reports/5
