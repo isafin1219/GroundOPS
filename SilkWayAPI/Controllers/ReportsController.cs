@@ -82,13 +82,13 @@ namespace SilkwayAPI.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(long id)
         {
-            var todo = _context.ReportList.Find(id);
-            if (todo == null)
+            var report = _context.ReportList.Find(id);
+            if (report == null)
             {
                 return NotFound();
             }
 
-            _context.ReportList.Remove(todo);
+            _context.ReportList.Remove(report);
             _context.SaveChanges();
             return NoContent();
         }
