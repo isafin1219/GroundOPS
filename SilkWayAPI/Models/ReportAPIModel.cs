@@ -7,14 +7,14 @@ namespace SilkwayAPI.Models
         public int Flightid { get; set; }
         public DateTime Date { get; set; }
 
-        public ZFWItem ZFW { get; set; }
-        public TimeItem Loading { get; set; }
-        public TimeItem Fueling { get; set; }
-        public TimeItem Catering { get; set; }
-        public OFPItem OFP { get; set; }
-        public WnBItem WnB { get; set; }
-        public DoorsItem Doors { get; set; }
-        public StatusItem Status { get; set; }
-        public DelaysList Delays { get; set; }
+        public string ZFW { get; set; }
+        public string Loading { get; set; }
+        public string Fueling { get; set; }
+        public string Catering { get; set; }
+        public string OFP { get; set; }
+        public string WnB { get; set; }
+        public string Doors { get; set; }
+        public string Status { get; set; }
+        public string Delays { get; set; }
     }
 }
