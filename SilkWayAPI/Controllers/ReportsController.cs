@@ -52,18 +52,18 @@ namespace SilkwayAPI.Controllers
 
             var newreport = new Report
             {
-                Reportid = item.Reportid;
-                Flightid = item.Flightid;
-                Date = item.Date;
-                ZFW = item.ZFW;
-                Loading = item.Loading;
-                Fueling = item.Fueling;
-                Catering = item.Catering;
-                OFP = item.OFP;
-                WnB = item.WnB;
-                Doors = item.Doors;
-                Status = item.Status;
-                Delays = item.Delays;
+                Reportid = item.Reportid,
+                Flightid = item.Flightid,
+                Date = item.Date,
+                ZFW = item.ZFW,
+                Loading = item.Loading,
+                Fueling = item.Fueling,
+                Catering = item.Catering,
+                OFP = item.OFP,
+                WnB = item.WnB,
+                Doors = item.Doors,
+                Status = item.Status,
+                Delays = item.Delays
             };
 
             _context.ReportList.Add(newreport);
