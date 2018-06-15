@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Hangfire;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using SilkwayAPI.Data;
 using SilkwayAPI.Models;
 
@@ -56,15 +55,15 @@ namespace SilkwayAPI.Controllers
                 Reportid = item.Reportid,
                 Flightid = item.Flightid,
                 Date = item.Date,
-                ZFW = JsonConvert.DeserializeObject<ZFWItem>(item.ZFW),
-                Loading = JsonConvert.DeserializeObject<TimeItem>(item.Loading),
-                Fueling = JsonConvert.DeserializeObject<TimeItem>(item.Fueling),
-                Catering = JsonConvert.DeserializeObject<TimeItem>(item.Catering),
-                OFP = JsonConvert.DeserializeObject<OFPItem>(item.OFP),
-                WnB = JsonConvert.DeserializeObject<WnBItem>(item.WnB),
-                Doors = JsonConvert.DeserializeObject<DoorsItem>(item.Doors),
-                Status = JsonConvert.DeserializeObject<StatusItem>(item.Status),
-                Delays = JsonConvert.DeserializeObject<DelaysList>(item.Delays)
+                ZFW = item.ZFW,
+                Loading = item.Loading,
+                Fueling = item.Fueling,
+                Catering = item.Catering,
+                OFP = item.OFP,
+                WnB = item.WnB,
+                Doors = item.Doors,
+                Status = item.Status,
+                Delays = item.Delays
             };
 
             //_context.ReportList.Add(newreport);
