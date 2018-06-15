@@ -87,21 +87,17 @@ namespace SilkwayAPI.Controllers
                 return NotFound();
             }
 
-            report = new Report
-            {
-                Reportid = item.Reportid,
-                Flightid = item.Flightid,
-                Date = item.Date,
-                ZFW = item.ZFW,
-                Loading = item.Loading,
-                Fueling = item.Fueling,
-                Catering = item.Catering,
-                OFP = item.OFP,
-                WnB = item.WnB,
-                Doors = item.Doors,
-                Status = item.Status,
-                Delays = item.Delays
-            };
+            report.Flightid = item.Flightid;
+            report.Date = item.Date;
+            report.ZFW = item.ZFW;
+            report.Loading = item.Loading;
+            report.Fueling = item.Fueling;
+            report.Catering = item.Catering;
+            report.OFP = item.OFP;
+            report.WnB = item.WnB;
+            report.Doors = item.Doors;
+            report.Status = item.Status;
+            report.Delays = item.Delays;
 
             _context.ReportList.Update(report);
             _context.SaveChanges();
