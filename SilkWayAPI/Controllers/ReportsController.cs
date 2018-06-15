@@ -66,8 +66,8 @@ namespace SilkwayAPI.Controllers
                 Delays = item.Delays
             };
 
-            _context.ReportList.Add(newreport);
-            _context.SaveChanges();
+            //_context.ReportList.Add(newreport);
+            //_context.SaveChanges();
 
             //return CreatedAtRoute("GetReport", new { id = newreport.Reportid },  newreport);
             return newreport;
