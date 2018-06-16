@@ -40,7 +40,7 @@ namespace SilkwayAPI
                 options.Audience = Configuration["Auth0:ApiIdentifier"];
             });*/
 
-            /*services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
                     options.Authority = "https://securetoken.google.com/registration-9a18d";
@@ -52,7 +52,7 @@ namespace SilkwayAPI
                         ValidAudience = "registration-9a18d",
                         ValidateLifetime = true
                     };
-                });*/
+                });
 
             services.AddCors(options =>
             {
@@ -102,7 +102,7 @@ namespace SilkwayAPI
             });
 
             // 2. Enable authentication middleware
-            //app.UseAuthentication();
+            app.UseAuthentication();
 
             app.UseCors("CorsPolicy");
 

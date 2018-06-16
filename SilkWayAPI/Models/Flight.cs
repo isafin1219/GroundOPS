@@ -34,7 +34,7 @@ namespace SilkwayAPI.Models
         public DateTime? Acars_blockintime { get; set; }
         public DateTime? Revised_departure { get; set; }
         public DateTime? Revised_arrival { get; set; }
-        public string Remarks { get; set; }
+        public string Remarks { get; set; }                                           
 
 
         internal string _Apt_dep { get; set; }

@@ -12,7 +12,7 @@ namespace SilkwayAPI.Controllers
 {
     [Produces("application/json")]
     [Route("api/reports")]
-    //[Authorize]
+    [Authorize]
     public class ReportsController : Controller
     {
         private readonly SilkwayAPIContext _context;
